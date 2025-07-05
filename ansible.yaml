@@ -1,7 +1,7 @@
 ---
 - name: Install and start Apache web server
   hosts: webservers
-  become: yes  # Run tasks with sudo/root
+  become: yes  # Run tasks with sudo/root usr1
   tasks:
 
     - name: Install Apache on Debian-based systems
