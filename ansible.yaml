@@ -1,0 +1,32 @@
+---
+- name: Install and start Apache web server
+  hosts: webservers
+  become: yes  # Run tasks with sudo/root
+  tasks:
+
+    - name: Install Apache on Debian-based systems
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install Apache on Red Hat-based systems
+      yum:
+        name: httpd
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Ensure Apache is started and enabled on Debian-based systems
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Ensure Apache is started and enabled on Red Hat-based systems
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      when: ansible_os_family == "RedHat"
